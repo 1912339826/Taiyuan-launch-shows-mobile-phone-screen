@@ -1,0 +1,281 @@
+// 折线和柱状图
+<template>
+  <div id="Pair">
+    <div :id="idName" class="Pair_child" :style="{width: '1000px',height: '500px' }"></div>
+    <img :src="imgs" alt />
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Pair",
+  data() {
+    return {
+      imgs: "",
+      // percent: [100, 100, 100, 100, 100, 100, 100, 100],
+      // quantity: [4.2, 3.8, 4.8, 3.5, 2.9, 2.8, 3, 5],
+      // xAxis: [
+      //   "第25基地通讯团",
+      //   "去年同期水量",
+      //   "滚动目标值水量",
+      //   "全年目标值水量",
+      //   "当年完成金额",
+      //   "去年同期金额",
+      //   "滚动目标金额",
+      //   "全年目标值"
+      // ],
+      // max: [0]
+    };
+  },
+  props: {
+    idName: {
+      type: String,
+      default: "PairMY"
+    },
+    percent: {
+      type: Array,
+      default: function() {
+        return [100, 100, 100, 100, 100, 100, 100, 100];
+      }
+    },
+    quantity: {
+      type: Array,
+      default: function() {
+        return [4.2, 3.8, 4.8, 3.5, 2.9, 2.8, 3, 5];
+      }
+    },
+    max: {
+      type: Number,
+      default:0
+    },
+    xAxis: {
+      type: Array,
+      default: function() {
+        return [
+          "第25基地通讯团",
+          "去年同期水量",
+          "滚动目标值水量",
+          "全年目标值水量",
+          "当年完成金额",
+          "去年同期金额",
+          "滚动目标金额",
+          "全年目标值"
+        ];
+      }
+    }
+  },
+  mounted() {
+    this.visitor();
+    window.onresize = () => {
+      this.imgs = "";
+      this.visitor();
+    };
+  },
+  methods: {
+    visitor() {
+      console.log(this.xAxis)
+      this.imgs = "";
+      let myChart = this.$echarts.init(
+        document.getElementById(this.idName),
+        "macarons"
+      );
+      window.onresize = myChart.resize;
+      myChart.setOption({
+        // backgroundColor: "#1f3f72",
+        grid: {
+          top: "15%",
+          bottom: "18%", //也可设置left和right设置距离来控制图表的大小
+          left: "5%",
+          right: "7%"
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+            label: {
+              show: true
+            }
+          }
+        },
+        legend: {
+          data: ["人员在位率(%)", "人员在位数(个)"],
+          top: "0%",
+          textStyle: {
+            color: "#ffffff"
+          }
+        },
+        xAxis: {
+          boundaryGap: false,
+          data: this.xAxis,
+          axisLine: {
+            show: true, //隐藏X轴轴线
+            lineStyle: {
+              color: "#01FCE3"
+            }
+          },
+          axisTick: {
+            show: true //隐藏X轴刻度
+          },
+          axisLabel: {
+            show: true,
+            rotate: 22,
+            interval: 0,
+            textStyle: {
+              color: "#ebf8ac", //X轴文字颜色
+              fontSize: 16
+            }
+          }
+        },
+        yAxis: [
+          {
+            max: this.max + 5,
+            min: 0,
+            nameGap: 40,
+            type: "value",
+            name: "人员数量(个)",
+            nameTextStyle: {
+              color: "#ebf8ac"
+            },
+            splitLine: {
+              show: false
+            },
+            axisTick: {
+              show: true
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#FFFFFF"
+              }
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: "#ebf8ac"
+              }
+            }
+          },
+          {
+            max: 100,
+            nameGap: 40,
+            type: "value",
+            name: "在位率(%)",
+            nameTextStyle: {
+              color: "#ebf8ac"
+            },
+            position: "right",
+            splitLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              formatter: "{value} %", //右侧Y轴文字显示
+              textStyle: {
+                color: "#ebf8ac"
+              }
+            }
+          }
+        ],
+        series: [
+          {
+            animation: false,
+            name: "人员在位率(%)",
+            type: "line",
+            label: {
+              show: true,
+              position: "top",
+              distance: 10,
+              color: "#fdd100",
+              fontWeight: "bolder",
+              fontSize: 15
+            },
+            yAxisIndex: 1, //使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+            smooth: true, //平滑曲线显示
+            showAllSymbol: true, //显示所有图形。
+            symbol: "circle", //标记的图形为实心圆
+            symbolSize: 10, //标记的大小
+            itemStyle: {
+              //折线拐点标志的样式
+              color: "#fafd00"
+            },
+            lineStyle: {
+              color: "#fdd100"
+            },
+            areaStyle: {
+              // show:false
+              color: "#dbdfe0"
+            },
+            data: this.percent
+          },
+          {
+            animation: false,
+            name: "人员在位数(个)",
+            type: "line",
+            label: {
+              show: true,
+              position: "top",
+              distance: 10,
+              color: "#058cff",
+              fontWeight: "bolder",
+              fontSize: 15
+            },
+            yAxisIndex: 0, //使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+            smooth: true, //平滑曲线显示
+            showAllSymbol: true, //显示所有图形。
+            symbol: "circle", //标记的图形为实心圆
+            symbolSize: 10, //标记的大小
+            itemStyle: {
+              //折线拐点标志的样式
+              color: "#34ecfc"
+            },
+            lineStyle: {
+              color: "#058cff"
+            },
+            areaStyle: {
+              color: "#dbdfe0"
+            },
+            data: this.quantity
+          }
+        ]
+      });
+      var img = new Image();
+      img.src = myChart.getDataURL({
+        pixelRatio: 2,
+        backgroundColor: "#2d579b"
+        // backgroundColor:"#dbdfe000"
+      });
+      this.imgs = img.src;
+    }
+  }
+};
+</script>
+
+<style scoped>
+#Pair {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  /* background-color: #dbdfe000; */
+}
+
+#Pair > .Pair_child {
+  position: absolute;
+  visibility: hidden;
+}
+
+#Pair > img {
+  position: absolute;
+  width: 100%;
+  height: 90%;
+  z-index: 999;
+  top: 0;
+  left: 0;
+}
+</style>
