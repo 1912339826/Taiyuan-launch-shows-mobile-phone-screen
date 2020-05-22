@@ -1,0 +1,1 @@
+将walden.js放到错误提示中对应(node_modules文件夹下的echarts文件夹内)的位置.
