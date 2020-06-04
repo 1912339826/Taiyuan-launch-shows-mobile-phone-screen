@@ -50,23 +50,36 @@
             :class="ischangeday.value==item.value?'active center-btn-child':'active-no center-btn-child'"
             @click="changeWeek(item)"
           >
-            <div class="left">
-              <div
-                class="top-month"
-              >{{toMomthAndDay(item.value.split("(")[1].split(")")[0].split("~")[0]).month}}月</div>
-              <div
-                class="bottom-day"
-              >{{toMomthAndDay(item.value.split("(")[1].split(")")[0].split("~")[0]).day}}</div>
-            </div>
-            <div class="center"></div>
-            <div class="right">
-              <div
-                class="top-month"
-              >{{toMomthAndDay(item.value.split("(")[1].split(")")[0].split("~")[1]).month}}月</div>
-              <div
-                class="bottom-day"
-              >{{toMomthAndDay(item.value.split("(")[1].split(")")[0].split("~")[1]).day}}</div>
-            </div>
+            <template v-if="item!='1'">
+              <div class="left">
+                <div
+                  class="top-month"
+                >{{toMomthAndDay(item.value.split("(")[1].split(")")[0].split("~")[0]).month}}月</div>
+                <div
+                  class="bottom-day"
+                >{{toMomthAndDay(item.value.split("(")[1].split(")")[0].split("~")[0]).day}}</div>
+              </div>
+              <div class="center"></div>
+              <div class="right">
+                <div
+                  class="top-month"
+                >{{toMomthAndDay(item.value.split("(")[1].split(")")[0].split("~")[1]).month}}月</div>
+                <div
+                  class="bottom-day"
+                >{{toMomthAndDay(item.value.split("(")[1].split(")")[0].split("~")[1]).day}}</div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="left" style="visibility: hidden">
+                <div class="top-month">6月</div>
+                <div class="bottom-day">1</div>
+              </div>
+              <div class="center" style="visibility: hidden"></div>
+              <div class="right" style="visibility: hidden">
+                <div class="top-month">6月</div>
+                <div class="bottom-day">7</div>
+              </div>
+            </template>
           </div>
         </div>
         <div class="right-btn" @click="rightBtn"></div>
@@ -184,7 +197,7 @@ export default {
   },
   data: function() {
     return {
-      changeName:'',
+      changeName: "",
       IsshowDutyManage: {},
       current: "",
       yearandmonthanddate: ``,
@@ -241,10 +254,10 @@ export default {
         }
       ],
       hearImg: localStorage.getItem("BASE_URLA"),
-      ChangeorgId: '',
+      ChangeorgId: "",
       headPicPath: "",
       personnelPicPath: "",
-      orgLevel: ''
+      orgLevel: ""
     };
   },
   watch: {},
@@ -279,9 +292,10 @@ export default {
           if (time.getTime() > one) {
             if (!this.weekdata[this.weekdata[index].key - 2]) {
               boxlistarr.push(
+                '1',
                 this.weekdata[this.weekdata[index].key - 1],
                 this.weekdata[this.weekdata[index].key],
-                this.weekdata[this.weekdata[index].key + 1]
+                // this.weekdata[this.weekdata[index].key + 1]
               );
             } else if (!this.weekdata[this.weekdata[index].key]) {
               boxlistarr.push(
@@ -291,9 +305,10 @@ export default {
               );
             } else {
               boxlistarr.push(
-                this.weekdata[this.weekdata[index].key - 2],
+                // this.weekdata[this.weekdata[index].key - 2],
                 this.weekdata[this.weekdata[index].key - 1],
-                this.weekdata[this.weekdata[index].key]
+                this.weekdata[this.weekdata[index].key],
+                '1'
               );
             }
 
@@ -320,7 +335,7 @@ export default {
       this.IsshowDutyManage = res.data;
       // this.headPicPath = `${this.hearImg}${this.IsshowDutyManage.headPicPath}`;
       // this.personnelPicPath = `${this.hearImg}${this.IsshowDutyManage.personnelPicPath}`;
-       this.headPicPath = `${window.BASE_URLA}${this.IsshowDutyManage.headPicPath}`;
+      this.headPicPath = `${window.BASE_URLA}${this.IsshowDutyManage.headPicPath}`;
       this.personnelPicPath = `${window.BASE_URLA}${this.IsshowDutyManage.personnelPicPath}`;
     },
     // 1.战备工作-部门导航
@@ -337,7 +352,7 @@ export default {
       this.changeName = this.basename.name;
       this.ChangeorgId = this.basename.id;
       this.orgLevel = res.data.children[0].levelCode;
-      this.showDutyManage()
+      this.showDutyManage();
       this.officearr = res.data.children[0].children;
       for (
         let index = 0;
@@ -374,10 +389,10 @@ export default {
       return new Date(time).getTime();
     },
     // 点击基地/团/营的按钮以及下拉选项
-    dropdown(id, orgLevel,name) {
+    dropdown(id, orgLevel, name) {
       this.orgLevel = orgLevel;
       this.ChangeorgId = id;
-      if(name!=""){
+      if (name != "") {
         this.changeName = name;
       }
       this.getSrTecResultData();
@@ -385,12 +400,28 @@ export default {
     },
     // 选中某一周
     changeWeek(item) {
-      this.ischangeday = item;
-      this.getSrTecResultData();
+      // 2020年6月4日16:47:30
+      if (item.key == 1) {
+        this.weekdatabox[0] = '1';
+        this.weekdatabox[1] = this.weekdata[0];
+        this.weekdatabox[2] = this.weekdata[1];
+      } else if (item.key == this.weekdata.length) {
+        this.weekdatabox[0] = this.weekdata[this.weekdata.length - 2];
+        this.weekdatabox[1] = this.weekdata[this.weekdata.length - 1];
+        this.weekdatabox[2] = '1';
+      } else {
+        this.weekdatabox[0] = this.weekdata[item.key - 2];
+        this.weekdatabox[1] = this.weekdata[item.key - 1];
+        this.weekdatabox[2] = this.weekdata[item.key];
+      }
+      if (item!='1') {
+        this.ischangeday = item;
+        this.getSrTecResultData();
+      }
     },
     // 减一周
     leftBtn() {
-      if (this.weekdatabox[0].key != this.weekdata[0].key) {
+      if (this.weekdatabox[0].key != this.weekdata[0].key&&this.weekdatabox[0]!='1') {
         let boxarr = [];
         boxarr.push(
           this.weekdata[this.weekdatabox[0].key - 2],
@@ -398,7 +429,10 @@ export default {
           this.weekdata[this.weekdatabox[0].key]
         );
         this.weekdatabox = boxarr;
-      } else {
+      }else if(this.weekdatabox[0]=='1'){
+         this.$message.warn("没有了");
+      } 
+      else {
         this.$message.warn("没有了");
       }
     },
@@ -406,7 +440,7 @@ export default {
     rightBtn() {
       if (
         this.weekdatabox[this.weekdatabox.length - 1].key !=
-        this.weekdata[this.weekdata.length - 1].key
+        this.weekdata[this.weekdata.length - 1].key&&this.weekdatabox[2]!='1'
       ) {
         let boxarr = [];
         boxarr.push(
@@ -415,7 +449,10 @@ export default {
           this.weekdata[this.weekdatabox[0].key + 2]
         );
         this.weekdatabox = boxarr;
-      } else {
+      }else if(this.weekdatabox[2]=='1'){
+        this.$message.warn("没有了");
+      } 
+      else {
         this.$message.warn("没有了");
       }
     },
@@ -597,16 +634,15 @@ export default {
   justify-content: space-around;
 }
 
-.lay-one .activeA{
+.lay-one .activeA {
   border: 1px solid #013bf6;
 }
 
-.lay-one #activeA{
+.lay-one #activeA {
   color: #2d8cf0;
 }
 
-
-.lay-one a{
+.lay-one a {
   display: block;
   width: 10vw;
   height: 5vw;
@@ -618,11 +654,11 @@ export default {
   text-align: center;
 }
 
-.lay-one /deep/.ivu-dropdown .ivu-dropdown-rel .activeA{
+.lay-one /deep/.ivu-dropdown .ivu-dropdown-rel .activeA {
   border: 1px solid #013bf6;
 }
 
-.lay-one /deep/.ivu-dropdown .ivu-dropdown-rel #activeA{
+.lay-one /deep/.ivu-dropdown .ivu-dropdown-rel #activeA {
   color: #2d8cf0;
 }
 
@@ -720,7 +756,7 @@ export default {
 }
 
 /* .two-left > .Istitle > .text { */
-  /* padding-left: vw; */
+/* padding-left: vw; */
 /* } */
 
 .two-left > .content > .bottom {
