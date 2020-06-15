@@ -457,7 +457,7 @@ export default {
       }
     },
     // 时间"2020-03-30"格式转化成功{month:"3月",day:"30"}
-    toMomthAndDay(data) {
+    toMomthAndDay(data) { 
       let isdata = new Date(data);
       return {
         month: isdata.getMonth() + 1,
@@ -465,7 +465,7 @@ export default {
       };
     },
     // 树结构转换成普通数组
-    treeTransArray(tree, key) {
+    treeTransArray(tree, key) {   
       return tree
         .reduce(function f(con, item) {
           var callee = f;
