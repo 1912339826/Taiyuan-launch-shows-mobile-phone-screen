@@ -13,7 +13,7 @@
         <td>{{item.plan}}</td>
         <td class="Progress">
           <div class="box"></div>
-          <div class="change" :style="{width:`${item.avg}%`}"></div>
+          <div class="change" :style="{width:`${item.avg>100?100:item.avg}%`}"></div>
         </td>
         <td style="border-left:none;">{{item.avg}}%</td>
       </tr>
@@ -32,7 +32,7 @@ export default {
       type: Array,
       default: function() {
         return [
-          { real: 2.33, plan: 75.0, name: "专业训练", avg: 3.1 },
+          { real: 2.33, plan: 75.0, name: "专业训练", avg: 100 },
           { real: 0.29, plan: 356.0, name: "技能训练", avg: 0.08 },
           { real: 0.49, plan: 355.0, name: "队列训练", avg: 0.14 },
           { real: 0.25, plan: 11.0, name: "共同训练", avg: 2.27 },

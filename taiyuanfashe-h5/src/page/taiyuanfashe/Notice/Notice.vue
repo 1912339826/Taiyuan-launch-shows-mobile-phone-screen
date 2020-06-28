@@ -4,7 +4,7 @@
     <img class="back" src="../../../../static/images/05.png" alt />
     <Tab></Tab>
     <div style="position: fixed;z-index: 9999;bottom:3vw;left:3vw;border-radius: 50%;">
-      <Gohome />
+      <Gohome ref="GohomeClick" />
     </div>
     <section class="box">
       <div class="gaine">
@@ -103,6 +103,7 @@ export default {
   },
   data() {
     return {
+      issetInterval: "",
       PDFUrl: "",
       PDFpage: 1,
       delayTime: 500,
@@ -164,6 +165,7 @@ export default {
     // console.log(PDFObject.embed(`https://www-file.huawei.com/-/media/corporate/pdf/annual-report/annual_report_2019_cn.pdf`,`#pdfs`))
   },
   created() {
+    this.$refs.GohomeClick.MY_monitor();
     this.getNoticePage(0);
     // this.commonupload()
     // console.log(PDFJS.getDocument(`http://192.168.1.197:9081/upload/informnoticefilegrid/《Webpack实战-入门、进阶与调优》_居玉皓_2019-06-01-------10.pdf`))

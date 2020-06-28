@@ -155,6 +155,7 @@
             <div style="width: 100%;height: 100%;">
               <!-- <LineChart :name="'小时'" :series="series" ref="IsLineChart" :bottomTitle="bottomTitle"></LineChart> -->
               <ProgressBar :data2="IstrainScheduleContrast" />
+              <!-- <ProgressBar/> -->
             </div>
           </div>
         </div>
