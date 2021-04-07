@@ -3,21 +3,30 @@
     <Header></Header>
     <img class="back" src="../../../../static/images/05.png" alt />
     <Tab></Tab>
-    <div style="position: fixed;z-index: 9999;bottom:3vw;left:3vw;border-radius: 50%;">
+    <div
+      style="
+        position: fixed;
+        z-index: 9999;
+        bottom: 3vw;
+        left: 3vw;
+        border-radius: 50%;
+      "
+    >
       <Gohome />
     </div>
     <div class="lay-one">
       <div class="one-tab">
         <div
-          v-for="(item,index) in IszzgzMngOrgBuild"
+          v-for="(item, index) in IszzgzMngOrgBuild"
           :key="index"
           @click="tabButton(index)"
-          :class="item['text']==tabHeader['text'] ? 'tab-change':''"
+          :class="item['text'] == tabHeader['text'] ? 'tab-change' : ''"
         >
-          <span>{{item['text']}}</span>
+          <span>{{ item["text"] }}</span>
         </div>
       </div>
-      <div style="width:100%;height:51.5vw;" class="tree-box">
+      <div style="width: 100%; height: 51.5vw;" class="tree-box">
+        <!-- 46.7 -->
         <Tree :data2="TreeData" ref="Tree" />
         <!-- <Tree/> -->
       </div>
@@ -32,25 +41,38 @@
           </div>
 
           <div class="two-header">
-            <img src="../../../../static/images/circle_left_03.png" alt @click="Left" />
-            <div>{{istime.year}}年 {{istime.month}}月</div>
-            <img src="../../../../static/images/circle_right_03.png" alt @click="Right" />
+            <img
+              src="../../../../static/images/circle_left_03.png"
+              alt
+              @click="Left"
+            />
+            <div>{{ istime.year }}年 {{ istime.month }}月</div>
+            <img
+              src="../../../../static/images/circle_right_03.png"
+              alt
+              @click="Right"
+            />
           </div>
         </nav>
         <div class="content" ref="box">
           <div class="two-center">
-            <template v-if="IsgetMonthEduRecordList!=[]">
+            <template v-if="IsgetMonthEduRecordList != []">
               <div
                 class="two-center-items"
-                v-for="(item,index) in IsgetMonthEduRecordList"
+                v-for="(item, index) in IsgetMonthEduRecordList"
                 :key="index"
               >
                 <div class="child">
                   <div class="title_top">
-                    <span>第{{index+1}}周</span>
+                    <span>第{{ index + 1 }}周</span>
                   </div>
                   <div class="content">
-                    <div v-for="(item,indexs) in item.eduName.split(',')" :key="indexs">{{item}}</div>
+                    <div
+                      v-for="(item, indexs) in item.eduName.split(',')"
+                      :key="indexs"
+                    >
+                      {{ item }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -71,15 +93,86 @@
             <div
               v-for="item in timeTabData"
               :key="item.name"
-              :class="item.name==timeTabHeader ? 'active':''"
+              :class="item.name == timeTabHeader ? 'active' : ''"
               @click="timeTabButton(item)"
-            >{{item.name}}</div>
+            >
+              {{ item.name }}
+            </div>
           </div>
         </nav>
         <div class="content" ref="box">
           <div class="three-center">
-            <div style="width:100%;height:100%">
-              <Pie :datas="IsgetEduTypeCountChar" :roseType="true" ref="Pie"></Pie>
+            <div style="width: 100%; height: 100%">
+              <Pie
+                :datas="IsgetEduTypeCountChar"
+                :roseType="true"
+                ref="Pie"
+              ></Pie>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gaine lay-four">
+        <nav class="Istitle">
+          <div>
+            <img src="../../../../static/images/Index_Box_Icon.png" alt />
+            <div class="text">会议类型</div>
+          </div>
+          <div class="four-tab">
+            <div class="date">
+              <div class="four-header form">
+                <img
+                  src="../../../../static/images/circle_left_03.png"
+                  alt
+                  @click="meetingFormtLeft"
+                />
+                <div>{{ meetingForm.year }}年 {{ meetingForm.month }}月</div>
+                <img
+                  src="../../../../static/images/circle_right_03.png"
+                  alt
+                  @click="meetingFormtRight"
+                />
+              </div>
+              <div
+                style="
+                  text-align: center;
+                  color: #ffffff;
+                  margin-left: 1vw;
+                  margin-right: 1vw;
+                  display: flex;
+                  align-items: center;
+                "
+              >
+                ————
+              </div>
+              <div class="four-header to">
+                <img
+                  src="../../../../static/images/circle_left_03.png"
+                  alt
+                  @click="meetingTotLeft"
+                />
+                <div>{{ meetingTo.year }}年 {{ meetingTo.month }}月</div>
+                <img
+                  src="../../../../static/images/circle_right_03.png"
+                  alt
+                  @click="meetingTotRight"
+                />
+              </div>
+            </div>
+
+            <a-button type="primary" size="small" @click="listMeetType">
+              查询
+            </a-button>
+          </div>
+        </nav>
+        <div class="content" ref="box">
+          <div class="four-center">
+            <div style="width: 100%; height: 100%">
+              <Pie
+                :datas="meetingFormat"
+                :roseType="true"
+                ref="PieMeetingFormat"
+              ></Pie>
             </div>
           </div>
         </div>
@@ -103,50 +196,74 @@ export default {
     Pie,
     Gohome,
     Relation,
-    Tree
+    Tree,
   },
-  data: function() {
+  data: function () {
     return {
       TreeData: [],
       tabHeader: [],
       timeTabData: [{ name: "月度" }, { name: "季度" }, { name: "年度" }],
       timeTabHeader: "月度",
       istime: { year: "2020", month: "01" },
+      meetingForm: { year: "2021", month: "01" },
+      meetingTo: { year: "2021", month: "01" },
       IsgetMonthEduRecordList: [
         { week: "01", eduName: "主题教育,思想教育" },
         { week: "02", eduName: "思想教育,心理卫生教育" },
         { week: "03", eduName: "安全教育" },
         { week: "04", eduName: "安全教育" },
-        { eduName: "无", week: "05" }
+        { eduName: "无", week: "05" },
       ],
       IsgetEduTypeCountChar: [],
       IszzgzMngOrgBuild: [],
       childrenOne: false,
-      childrenTwo: false
+      childrenTwo: false,
+      meetingFormat: [],
+      meetingFormat_dictionaries: {
+        "01": "党支部会议",
+        "02": "团支部会议",
+        "03": "军人委员会议",
+        "04": "党委中心组学习会议",
+      },
     };
   },
-  mounted() {},
+  mounted() {
+    let clientWidth =
+      document.getElementsByClassName("lay-Box")[0].clientWidth / 100;
+    let clientHeight = document.getElementsByClassName("lay-Box")[0]
+      .clientHeight;
+    document
+      .getElementsByClassName("back")[0]
+      .setAttribute("height", clientHeight + 15 * clientWidth);
+  },
   created() {
     if (new Date().getMonth() + 1 < 10) {
       this.istime.month = `0${new Date().getMonth() + 1}`;
+      this.meetingTo.month = `0${new Date().getMonth() + 1}`;
+      this.meetingForm.month = `0${new Date().getMonth() + 1}`;
     } else {
       this.istime.month = `${new Date().getMonth() + 1}`;
+      this.meetingTo.month = `${new Date().getMonth() + 1}`;
+      this.meetingForm.month = `${new Date().getMonth() + 1}`;
     }
     this.istime.year = new Date().getFullYear();
+    this.meetingTo.year = new Date().getFullYear();
+    this.meetingForm.year = new Date().getFullYear();
+    this.meetingFormtLeft();
     this.zzgzMngOrgBuild(0);
     this.getMonthEduRecordList(this.istime);
     this.getEduTypeCountChar("01");
+    this.listMeetType();
   },
   methods: {
     // 1.政治工作-党委结构图  ??~~!!
     async zzgzMngOrgBuild(index) {
       this.TreeData = [];
-      let tabHeader = [];
       this.IszzgzMngOrgBuild = [];
       let arr = [];
       let box = [];
       let res = await this.$req(window.api.zzgzMngOrgBuild, {
-        parentId: localStorage.getItem("loginOrgId")
+        parentId: localStorage.getItem("loginOrgId"),
       });
       this.IszzgzMngOrgBuild = res.data.children;
       this.tabHeader = res.data.children[index];
@@ -155,7 +272,6 @@ export default {
         index
       ];
       this.TreeData.push(box);
-      console.log(box)
       this.$refs.Tree.visitor();
     },
     // 2.政治工作-月教育计划
@@ -163,7 +279,7 @@ export default {
       this.$message.destroy();
       this.IsgetMonthEduRecordList = [];
       let res = await this.$req(window.api.getMonthEduRecordList, {
-        yearMonth: `${time.year}-${time.month}`
+        yearMonth: `${time.year}-${time.month}`,
       });
       this.IsgetMonthEduRecordList = res.data.objectList;
       if (res.data.objectList.length == 0) {
@@ -176,7 +292,7 @@ export default {
       let arr = [];
       let boxarr = [];
       let res = await this.$req(window.api.getEduTypeCountChar, {
-        queryType: change
+        queryType: change,
       });
       arr = JSON.parse(res.data.data);
       // 此处判断后台数据是否异常
@@ -185,13 +301,38 @@ export default {
           const element = arr[index];
           this.IsgetEduTypeCountChar.push({
             value: element[1],
-            name: element[0]
+            name: element[0],
           });
         }
       } else {
         this.IsgetEduTypeCountChar.push({
           value: undefined,
-          name: undefined
+          name: undefined,
+        });
+      }
+    },
+    // 4.政治工作-会议类型饼图
+    async listMeetType() {
+      this.meetingFormat = [];
+      let arr = [];
+      let res = await this.$req(window.api.listMeetType, {
+        meetingTimeStart: `${this.meetingForm.year}-${this.meetingForm.month}`,
+        meetingTimeEnd: `${this.meetingTo.year}-${this.meetingTo.month}`,
+      });
+      arr = res.data.objectList;
+      // 此处判断后台数据是否异常
+      if (arr.length != 0) {
+        for (let index = 0; index < 4; index++) {
+          this.meetingFormat.push({
+            value: arr[0]["0" + (index + 1)],
+            name: this.meetingFormat_dictionaries["0" + (index + 1)],
+          });
+        }
+        this.$refs.PieMeetingFormat.visitor();
+      } else {
+        this.meetingFormat.push({
+          value: undefined,
+          name: undefined,
         });
       }
     },
@@ -232,6 +373,58 @@ export default {
       }
       this.getMonthEduRecordList(this.istime);
     },
+    // 会议类型Form上个月
+    meetingFormtLeft() {
+      if (this.meetingForm.month == "01") {
+        this.meetingForm.month = "12";
+        this.meetingForm.year = `${Number(this.meetingForm.year) - 1}`;
+      } else {
+        if (Number(this.meetingForm.month) - 1 < 10) {
+          this.meetingForm.month = `0${Number(this.meetingForm.month) - 1}`;
+        } else {
+          this.meetingForm.month = `${Number(this.meetingForm.month) - 1}`;
+        }
+      }
+    },
+    // 会议类型Form下个月
+    meetingFormtRight() {
+      if (this.meetingForm.month == "12") {
+        this.meetingForm.month = "01";
+        this.meetingForm.year = `${Number(this.meetingForm.year) + 1}`;
+      } else {
+        if (Number(this.meetingForm.month) + 1 < 10) {
+          this.meetingForm.month = `0${Number(this.meetingForm.month) + 1}`;
+        } else {
+          this.meetingForm.month = `${Number(this.meetingForm.month) + 1}`;
+        }
+      }
+    },
+    // 会议类型To上个月
+    meetingTotLeft() {
+      if (this.meetingTo.month == "01") {
+        this.meetingTo.month = "12";
+        this.meetingTo.year = `${Number(this.meetingTo.year) - 1}`;
+      } else {
+        if (Number(this.meetingTo.month) - 1 < 10) {
+          this.meetingTo.month = `0${Number(this.meetingTo.month) - 1}`;
+        } else {
+          this.meetingTo.month = `${Number(this.meetingTo.month) - 1}`;
+        }
+      }
+    },
+    // 会议类型To下个月
+    meetingTotRight() {
+      if (this.meetingTo.month == "12") {
+        this.meetingTo.month = "01";
+        this.meetingTo.year = `${Number(this.meetingTo.year) + 1}`;
+      } else {
+        if (Number(this.meetingTo.month) + 1 < 10) {
+          this.meetingTo.month = `0${Number(this.meetingTo.month) + 1}`;
+        } else {
+          this.meetingTo.month = `${Number(this.meetingTo.month) + 1}`;
+        }
+      }
+    },
     // 树结构转换成普通数组
     treeTransArray(tree, key) {
       return tree
@@ -243,7 +436,7 @@ export default {
           }
           return con;
         }, [])
-        .map(function(item) {
+        .map(function (item) {
           item[key] = [];
           return item;
         });
@@ -253,9 +446,9 @@ export default {
       // 一级节点数组
       let arrdata = [];
       let label = {
-          backgroundColor: {
-            image:''
-          }
+        backgroundColor: {
+          image: "",
+        },
       };
       // 拿到一级节点
       for (let item of arr) {
@@ -272,14 +465,14 @@ export default {
           };
           // label.backgroundColor{image:''}
           // 对每一级节点进行子节点获取
-          console.log(obj)
+          console.log(obj);
           obj[children] = this.treeToList_no_one(
             arr,
             item,
             father_id,
             child_id,
             children,
-            name,
+            name
             // label
           );
           arrdata.push(obj);
@@ -308,7 +501,7 @@ export default {
               father_id,
               child_id,
               children,
-              name,
+              name
               // label
             );
           }
@@ -316,15 +509,73 @@ export default {
         }
       }
       return childrenBox;
-    }
+    },
   },
   destroyed() {
     this.$message.destroy();
-  }
+  },
 };
 </script>
 
 <style scoped>
+.lay-four {
+  margin-top: 4vw;
+  width: 100%;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  height: 100%;
+}
+
+.lay-four /deep/ .ant-btn-sm {
+  font-size: 0.1rem;
+  height: 2.5vw;
+  padding: 0 1vw;
+}
+
+.lay-four .four-center {
+  height: 93%;
+  width: 100%;
+  overflow: scroll;
+}
+
+section .lay-four > .content {
+  height: 42vw;
+}
+
+.lay-four .four-tab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lay-four .four-tab .date {
+  display: flex;
+  justify-content: space-between;
+}
+
+.lay-four .four-header > img {
+  width: 2.8vw;
+  height: 2.8vw;
+}
+
+.lay-four .four-header > div {
+  margin-left: 2vw;
+  margin-right: 2vw;
+}
+
+.lay-four .four-header {
+  padding-right: 2.5vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 0.12rem;
+  color: #fff;
+}
+
+.lay-four .form {
+  padding-right: 0;
+}
+
 .lay-three .three-center {
   height: 93%;
   width: 100%;

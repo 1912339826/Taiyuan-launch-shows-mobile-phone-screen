@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV == "development") {
   // 开发
   // var BASE_URLA = "http://192.168.1.55:9081";
-  var BASE_URLA = "http://192.168.1.55:9081"
+  var BASE_URLA = "http://192.168.10.35:8086"
   // localStorage.setItem("BASE_URLA", BASE_URLA);
 } else if (process.env.NODE_ENV == "debug") {
   // debug
@@ -39,6 +39,8 @@ export default {
   getMonthEduRecordList: `${BASE_URLA}/armyplat/fl/queryIndex/getMonthEduRecordList.do`,
   // 3.政治工作-教育类型次数统计饼图
   getEduTypeCountChar: `${BASE_URLA}/armyplat/fl/queryIndex/getEduTypeCountChar.do`,
+  // 4.政治工作-会议类型饼图
+  listMeetType: `${BASE_URLA}/zzgz/zzgzMngOrgCons/zzgzMngMeet/zzorgmeeting/listMeetType.do`,
   // 1.日常管理-人员在位率柱状图
   perReignCount: `${BASE_URLA}/jsxlplat/trainPlanIndex/trainPlan/perReignCount.do`,
   // 2.日常管理-人员在位数/在位率
@@ -51,6 +53,12 @@ export default {
   getTempHomeInfo: `${BASE_URLA}/armyplat/fl/queryIndex/getTempHomeInfo.do`,
   // 6.日常管理-今日访客情况
   getVisitRecord: `${BASE_URLA}/jsxlplat/trainPlanIndex/trainPlan/getVisitRecord.do`,
+  // 7.日常管理-当日卫生值班
+  listTodayDutySituation: `${BASE_URLA}/jsxlpost/dutymanagement/medicalOnDuty/lsPostDutyPerson/listTodayDutySituation.do`,
+  // 8.日常管理-年度外诊态势
+  listDiagnosisManage: `${BASE_URLA}/armyplat/fl/drugManage/dianosisManage/lsdiagnosismanage/listDiagnosisManage.do`,
+  // 9.日常管理-疗养态势
+  listLsrecuperateManage:`${BASE_URLA}/armyplat/fl/drugManage/recuperateManage/lsrecuperatemanage/listLsrecuperateManage.do`,
   // 1.工作计划-每日工作
   getThisWeekWorkInfo: `${BASE_URLA}/armyplat/fl/queryIndex/getThisWeekWorkInfo.do`,
   // 1.本周食谱
@@ -66,17 +74,25 @@ export default {
   // 3.建言建议-获取意见列表-分页
   getSuggestPage: `${BASE_URLA}/armyplat/fl/queryIndex/getSuggestPage.do`,
   // 军事训练
-  // 1.训练进度
+  // 1.军事训练-训练进度
   trainScheduleContrast: `${BASE_URLA}/jsxlplat/defaultpage/datastatics/trainScheduleContrast.do`,
-  //  2.参训率
+  //  2.军事训练-参训率
   // 周
   showTrainRateByOrg: `${BASE_URLA}/jsxlplat/defaultpage/datastatics/showTrainRateByOrg.do`,
   // 月
   showTrainRateByOneMonth: `${BASE_URLA}/jsxlplat/defaultpage/datastatics/showTrainRateByOneMonth.do`,
   // 年
   showTrainRateByRecentYear: `${BASE_URLA}/jsxlplat/defaultpage/datastatics/showTrainRateByRecentYear.do`,
-  // 3.岗位分布
+  // 3.军事训练-岗位分布
   showPostList: `${BASE_URLA}/jsxlplat/defaultpage/datastatics/showPostList.do`,
+  // 4.军事训练-成绩考核
+  getAssessRecord: `${BASE_URLA}/jsxlplat/trainAssessIndex/trainAssess/getAssessRecord.do`,
+  // 5.军事训练-学习情况展示
+  listByOrgId:`${BASE_URLA}/jsxlpost/mpeLearningManagement/listByOrgId.do`,
+  // 6.军事训练-选课情况展示
+  showListIndexChart:`${BASE_URLA}/jsxlpost/mpeCourseManagement/showListIndexChart.do`,
+  // 7.军事训练-结业情况展示 
+  listByOrgId_mpeGraduationGrades:`${BASE_URLA}/jsxlpost/mpeGraduationGrades/listByOrgId.do`,
   // 1.团长信箱
   bwleadersuggest: `${BASE_URLA}/secplat/basework/bwleadersuggest/save.do`,
    // 2.政委信箱

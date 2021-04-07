@@ -12,8 +12,8 @@ export default {
   data() {
     return {
       imgs: "",
-      fontSize:0,
-      IsroseType:"area"
+      fontSize: 0,
+      IsroseType: "area",
     };
   },
   props: {
@@ -25,37 +25,41 @@ export default {
           { value: 310, name: "单位2" },
           { value: 234, name: "单位3" },
           { value: 135, name: "单位4" },
-          { value: 1048, name: "单位5" }
+          { value: 1048, name: "单位5" },
         ];
-      }
+      },
     },
     idName: {
       type: String,
-      default: "myChart"
+      default: "myChart",
     },
-    roseType:{
-      type:Boolean,
-      default:false
-    }
+    roseType: {
+      type: Boolean,
+      default: false,
+    },
+    radius: {
+      type: Array,
+      default: function () {
+        return [40, 90];
+      },
+    },
   },
   watch: {
-    datas(){
+    datas() {
       this.visitor();
-    }
+    },
   },
   mounted() {
-    if(this.roseType){
+    if (this.roseType) {
       this.IsroseType = false;
-    }else{
-      this.IsroseType = 'area'
+    } else {
+      this.IsroseType = "area";
     }
     this.visitor();
     window.onresize = () => {
       this.imgs = "";
       this.visitor();
     };
-    
-    
   },
   destroyed() {
     window.onresize = null;
@@ -63,8 +67,11 @@ export default {
   },
   methods: {
     visitor() {
-    console.log(Number(document.documentElement.style.fontSize.split('px')[0])*0.13)
-    this.fontSize = Number(document.documentElement.style.fontSize.split('px')[0])*0.1
+      console.log(
+        Number(document.documentElement.style.fontSize.split("px")[0]) * 0.13
+      );
+      this.fontSize =
+        Number(document.documentElement.style.fontSize.split("px")[0]) * 0.1;
       let myChart = this.$echarts.init(
         document.getElementById(this.idName),
         "walden"
@@ -73,11 +80,11 @@ export default {
       myChart.setOption({
         tooltip: {
           trigger: "item",
-          formatter: "{a}<br/>{b}:{c}"
+          formatter: "{a}<br/>{b}:{c}",
         },
         label: {
           formatter: "{b}: {c}",
-          fontSize: this.fontSize
+          fontSize: this.fontSize,
         },
         series: [
           {
@@ -85,29 +92,29 @@ export default {
             name: "面积模式",
             type: "pie",
             height: "80%",
-            radius: [40, 90],
+            radius: this.radius,
             center: ["50.1%", "55%"],
-            label:{
-              color:'#fff'
+            label: {
+              color: "#fff",
             },
-             labelLine: {
-                lineStyle: {
-                    color: '#fff'
-                }
+            labelLine: {
+              lineStyle: {
+                color: "#fff",
+              },
             },
             roseType: this.IsroseType,
-            data: this.datas
-          }
-        ]
+            data: this.datas,
+          },
+        ],
       });
       var img = new Image();
       img.src = myChart.getDataURL({
         pixelRatio: 2,
-        backgroundColor: "#2d579b"
+        backgroundColor: "#2d579b",
       });
       this.imgs = img.src;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

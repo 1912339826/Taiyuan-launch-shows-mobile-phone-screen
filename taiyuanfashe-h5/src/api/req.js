@@ -20,13 +20,6 @@ axios.defaults.timeout = 60000;
 axios.defaults.withCredentials = true
 axios.interceptors.request.use(config => {
   // 此处对请求的header进行配置
-  // let cookies = Tools.getCookies(`${appConfig.simpleName}_access_token`) || {};
-  // config.headers = {
-  //   Authorization: `${cookies.token_type} ${cookies.access_token}`
-  // };
-  // config.headers={
-  //   'Access-Token':111111
-  // };
   let data = config.data || config.params;
   removePending(config);
   config.cancelToken = new axios.CancelToken(cancel => {
@@ -55,7 +48,7 @@ let cun = 0;
 axios.interceptors.response.use(
   response => {
     removePending(response.config);
-    console.log(response.data)
+    // console.log(response.data)
     // 因为登录过期,后台数据返回含有'登录超时，请重新登录'的字符串
     if ((typeof response.data) == 'string') {
       if (response.data.indexOf("登录超时，请重新登录") != -1) {
@@ -79,6 +72,11 @@ axios.interceptors.response.use(
   },
   error => {
     console.log(error)
+    window.selfVue.$message.destroy();
+    window.selfVue.$message.error(error.request.status);
+    setTimeout(() => {
+      window.selfVue.$message.destroy()
+    }, 2000)
     if (error.request.status === 404) {
       // Tools.setCookies(`${appConfig.simpleName}_access_token`, null);
       // location.reload();
@@ -121,115 +119,3 @@ export default function (url, data) {
       });
   };
 }
-
-
-
-
-
-
-// export let req = {
-//     // imgUrl: 'http://sign.xn--fjq0sg8h2zkivvwsonptcv2b.com',
-//     imgUrl: setting.apiBaseURL,
-//     // 'http://47.98.169.218:8085', // 测试环境
-//     // 生产环境
-//     domain: setting.imageBaseURL,
-//     get: function (url, params, callback) {
-//       var me = this
-//       url = me.domain + url
-//       axios({
-//         url: url,
-//         method: 'get',
-//         params: params,
-//       }).then(function (response) {
-//         if (response.status === 401 || response.status === 403) {
-//         // 处理401，403
-//         //   window.Global.removeLocalStorage('token');
-//         //   router.push({name:"Login"})
-//         } else {
-//           if (typeof (callback) === 'function') {
-//             callback(response)
-//           }
-//         }
-//       }).catch(function (error) {
-
-//       })
-//     },
-//     post: function (url, params, callback) {
-//       var me = this;
-//       url = me.domain + url;
-//       axios({
-//         url: url,
-//         method: 'post',
-//         data: params,
-//         transformRequest: [function (data) {
-//           let ret = ''
-//           for (let it in data) {
-//             ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-//           }
-//           return ret
-//         }]
-//       }).then(function (response) {
-//         if (response.status == 401 || response.status == 403) {
-//         //   window.Global.removeLocalStorage('token');
-//         //   router.push({name:"Login"})
-//         } else {
-//           if (typeof (callback) === 'function') {
-//             callback(response)
-//           }
-//         }
-//       }).catch(function (error) {
-
-//       })
-//     },
-//     upload: function (url, params, callback) {
-//       var me = this
-//       url = me.domain + url
-//       axios({
-//         url: url,
-//         method: 'post',
-//         data: params,
-//         'Content-Type': 'multipart/form-data'
-//       }).then(function (response) {
-//         if (typeof (callback) === 'function') {
-//           callback(response)
-//         }
-//       }).catch(function (error) {
-//         var rs = error.response.data
-//         if (rs.status === false) {
-//           window.Global.removeLocalStorage('token')
-//           // window.location.reload()
-//         }
-//       })
-//     },
-
-//     checkToken() {
-//       if (window.Global.getLocalStorage('token')) {
-//         let tokend = window.Global.getLocalStorage('token')
-//         window.Global.post("wechat/user/checkToken", {
-//           token: tokend
-//         }, rs => {
-//           console.log("checkToken", tokend, rs.data.success)
-//           // 测试判断
-//           if (rs.data.success == false) {
-
-//             // window.Global.removeLocalStorage('token')
-//             // router.push({name:"Login"})
-//           } else {
-//             // router.push({name:"sign"})
-//           }
-//         })
-//       } else {
-//         // window.Global.removeLocalStorage('token')
-//         // router.push({name:"Login"})
-//       }
-//     },
-//     setLocalStorage: function (name, token) {
-//       window.localStorage.setItem(name, token)
-//     },
-//     getLocalStorage: function (name) {
-//       return window.localStorage.getItem(name)
-//     },
-//     removeLocalStorage: function (name) {
-//       window.localStorage.removeItem(name)
-//     }
-//   }
