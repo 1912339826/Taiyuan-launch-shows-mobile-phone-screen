@@ -294,7 +294,12 @@
           </nav>
 
           <div class="content">
-            <div></div>
+            <HistogramListDiagnosisManage
+              :Y_name="'数量(个)'"
+              :X_data="['外诊态势']"
+              :datas="listDiagnosisManageObj.data"
+              :name="listDiagnosisManageObj.name"
+            />
           </div>
         </div>
       </section>
@@ -365,7 +370,12 @@
           </nav>
 
           <div class="content">
-            <div></div>
+            <HistogramListLsrecuperate
+              :Y_name="'数量(个)'"
+              :X_data="['疗养态势']"
+              :datas="listLsrecuperateManageObj.data"
+              :name="listLsrecuperateManageObj.name"
+            />
           </div>
         </div>
       </section>
@@ -383,6 +393,8 @@ import LineChart from "../../../components/taiyuanfashe/LineChart";
 import Gohome from "../../../components/taiyuanfashe/Gohome";
 import Pie from "../../../components/taiyuanfashe/Pie";
 import Pair from "../../../components/taiyuanfashe/Pair";
+import HistogramListDiagnosisManage from "../../../components/taiyuanfashe/Histogram_listDiagnosisManage";
+import HistogramListLsrecuperate from "../../../components/taiyuanfashe/Histogram_listLsrecuperateManage";
 export default {
   name: "Management",
   components: {
@@ -393,6 +405,8 @@ export default {
     Gohome,
     Pie,
     Pair,
+    HistogramListDiagnosisManage,
+    HistogramListLsrecuperate,
   },
   data: function () {
     return {
@@ -438,10 +452,13 @@ export default {
         dutyNames: "",
         personnelTelphoneNum: "",
       },
-      listDiagnosisManageList: [],
+      listDiagnosisManageObj: { data: [], name: [] },
       listDiagnosisManageForm: { year: "2021", month: "01" },
       listDiagnosisManageTo: { year: "2021", month: "01" },
-      listLsrecuperateManageList: [],
+      listLsrecuperateManageObj: {
+        data: [],
+        name: [],
+      },
       listLsrecuperateManageForm: { year: "2021", month: "01" },
       listLsrecuperateManageTo: { year: "2021", month: "01" },
     };
@@ -741,23 +758,70 @@ export default {
     },
     // 8.日常管理-年度外诊态势
     async listDiagnosisManage() {
-      this.listDiagnosisManageList = [];
+      this.listDiagnosisManageObj = { data: [], name: [] };
       let res = await this.$req(window.api.listDiagnosisManage, {
         levelCode: localStorage.getItem("orgLevelCode"),
         beginTime: `${this.listDiagnosisManageForm.year}-${this.listDiagnosisManageForm.month}-01`,
-        endTime: `${this.listDiagnosisManageTo.year}-${this.listDiagnosisManageTo.month}-01`,
+        endTime: this.endTime_fun(
+          `${this.listDiagnosisManageTo.year}-${this.listDiagnosisManageTo.month}-01`
+        ),
       });
-      this.listDiagnosisManageList = res.data.objectList;
+      console.log(res); //count name
+      if (res.data.objectList.length != 0) {
+        for (let index = 0; index < res.data.objectList.length; index++) {
+          const element = res.data.objectList[index];
+          this.listDiagnosisManageObj.data.push({
+            name: element.name,
+            animation: false,
+            data: [element.count],
+            type: "bar",
+            barWidth: "20%",
+          });
+          this.listDiagnosisManageObj.name.push(element.name);
+        }
+      }
     },
     // 9.日常管理-疗养态势
     async listLsrecuperateManage() {
-      this.listLsrecuperateManage = [];
+      this.listLsrecuperateManageObj = { data: [], name: [] };
       let res = await this.$req(window.api.listLsrecuperateManage, {
         levelCode: localStorage.getItem("orgLevelCode"),
         beginTime: `${this.listLsrecuperateManageForm.year}-${this.listLsrecuperateManageForm.month}-01`,
-        endTime: `${this.listLsrecuperateManageTo.year}-${this.listLsrecuperateManageTo.month}-01`,
-      });
-      this.listLsrecuperateManageList = res.data.objectList;
+        endTime: this.endTime_fun(
+          `${this.listLsrecuperateManageTo.year}-${this.listLsrecuperateManageTo.month}-01`
+        ),
+      }); //count name
+      if (res.data.objectList.length != 0) {
+        for (let index = 0; index < res.data.objectList.length; index++) {
+          const element = res.data.objectList[index];
+          this.listLsrecuperateManageObj.data.push({
+            name: element.name,
+            animation: false,
+            data: [element.count],
+            type: "bar",
+            barWidth: "20%",
+          });
+          this.listLsrecuperateManageObj.name.push(element.name);
+        }
+      }
+    },
+    endTime_fun(e) {
+      let e_array = e.split("-");
+      let e_array_mon = Number(e_array[1]) + 1;
+      e_array[1] = e_array_mon;
+      let e_string = e_array.join("-");
+      console.log(e_string);
+      let date = new Date(new Date(e_string).setDate(0));
+      let year = date.getFullYear();
+      let mon = date.getMonth() + 1;
+      if (mon < 10) {
+        mon = `0${mon}`;
+      }
+      let day = date.getDate();
+      if (day < 10) {
+        day = `0${day}`;
+      }
+      return `${year}-${mon}-${day}`;
     },
   },
 };
@@ -768,7 +832,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
 }
 
 .box > section > .six .Isborder .date {

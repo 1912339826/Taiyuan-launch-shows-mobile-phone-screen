@@ -179,7 +179,11 @@
               </div>
             </div>
 
-            <a-button type="primary" size="small" @click="getAssessRecord(ChangeorgId)">
+            <a-button
+              type="primary"
+              size="small"
+              @click="getAssessRecord(ChangeorgId)"
+            >
               查询
             </a-button>
           </div>
@@ -234,7 +238,13 @@
           <div class="four-tab"></div>
         </nav>
         <div class="content" ref="box">
-          <Histogram />
+          <HistogramShowListIndexChart
+            :datas="showListIndexChartObj.data"
+            :name="showListIndexChartObj.name"
+            :Y_name="'数量'"
+            :X_data='["注册人数", "选课人数", "选课人次"]'
+            ref="showListIndexChart"
+          />
         </div>
       </div>
       <div class="gaine six">
@@ -266,7 +276,7 @@ import LineChart from "../../../components/taiyuanfashe/LineChart";
 import Gohome from "../../../components/taiyuanfashe/Gohome";
 import Pie from "../../../components/taiyuanfashe/Pie";
 import ProgressBar from "../../../components/taiyuanfashe/ProgressBar";
-import Histogram from "../../../components/taiyuanfashe/Histogram";
+import HistogramShowListIndexChart from "../../../components/taiyuanfashe/Histogram_showListIndexChart";
 export default {
   name: "MilitaryTraining",
   components: {
@@ -276,7 +286,7 @@ export default {
     Gohome,
     Pie,
     ProgressBar,
-    Histogram,
+    HistogramShowListIndexChart,
   },
   data: function () {
     return {
@@ -456,6 +466,7 @@ export default {
       getAssessRecordList: [],
       listByOrgId_mpeGraduationGradesList: [],
       listByOrgIdList: [],
+      showListIndexChartObj: {},
     };
   },
   created() {
@@ -650,7 +661,10 @@ export default {
       let objectList = [];
       let res = await this.$req(window.api.getAssessRecord, {
         startTime: `${this.meetingForm.year}-${this.meetingForm.month}-01`,
-        endTime: `${this.meetingTo.year}-${this.meetingTo.month}-01`,
+        // endTime: `${this.meetingTo.year}-${this.meetingTo.month}-01`,
+        endTime: this.endTime_fun(
+          `${this.meetingTo.year}-${this.meetingTo.month}-01`
+        ),
         orgId: id,
       });
       objectList = res.data.objectList;
@@ -683,11 +697,14 @@ export default {
     },
     //6.军事训练-选课情况展示
     async showListIndexChart(id) {
-      let arr = [];
+      this.showListIndexChartObj = {};
+      let Obj = [];
       let res = await this.$req(window.api.showListIndexChart, {
         orgId: id,
       });
-      arr = res.data;
+      Obj = res.data[0][0];
+      console.log(Obj, "Obj");
+      this.showListIndexChartObj = Obj;
     },
     //7.结业情况展示
     async listByOrgId_mpeGraduationGrades(id) {
@@ -777,6 +794,24 @@ export default {
           item[key] = [];
           return item;
         });
+    },
+    endTime_fun(e) {
+      let e_array = e.split("-");
+      let e_array_mon = Number(e_array[1]) + 1;
+      e_array[1] = e_array_mon;
+      let e_string = e_array.join("-");
+      console.log(e_string);
+      let date = new Date(new Date(e_string).setDate(0));
+      let year = date.getFullYear();
+      let mon = date.getMonth() + 1;
+      if (mon < 10) {
+        mon = `0${mon}`;
+      }
+      let day = date.getDate();
+      if (day < 10) {
+        day = `0${day}`;
+      }
+      return `${year}-${mon}-${day}`;
     },
   },
 };

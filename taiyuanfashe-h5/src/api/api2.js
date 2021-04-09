@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV == "development") {
   // 开发
-  // var BASE_URLA = "http://192.168.1.55:9081";
-  var BASE_URLA = "http://192.168.10.35:8086"
+  var BASE_URLA = "http://192.168.1.55:9081";
+  // var BASE_URLA = "http://192.168.1.55:8086"
   // localStorage.setItem("BASE_URLA", BASE_URLA);
 } else if (process.env.NODE_ENV == "debug") {
   // debug
@@ -9,10 +9,10 @@ if (process.env.NODE_ENV == "development") {
   // localStorage.setItem("BASE_URLA", BASE_URLA);
 } else if (process.env.NODE_ENV == "production") {
   // 生产
-  var BASE_URLA = "http://172.1.0.130:9081";
+  var BASE_URLA = window.BASE_URLA;
   // var BASE_URLA = "http://192.168.1.55:9081";
   // localStorage.setItem("BASE_URLA", BASE_URLA);
-  
+
 }
 window.BASE_URLA = BASE_URLA;
 export default {
@@ -58,7 +58,7 @@ export default {
   // 8.日常管理-年度外诊态势
   listDiagnosisManage: `${BASE_URLA}/armyplat/fl/drugManage/dianosisManage/lsdiagnosismanage/listDiagnosisManage.do`,
   // 9.日常管理-疗养态势
-  listLsrecuperateManage:`${BASE_URLA}/armyplat/fl/drugManage/recuperateManage/lsrecuperatemanage/listLsrecuperateManage.do`,
+  listLsrecuperateManage: `${BASE_URLA}/armyplat/fl/drugManage/recuperateManage/lsrecuperatemanage/listLsrecuperateManage.do`,
   // 1.工作计划-每日工作
   getThisWeekWorkInfo: `${BASE_URLA}/armyplat/fl/queryIndex/getThisWeekWorkInfo.do`,
   // 1.本周食谱
@@ -88,17 +88,17 @@ export default {
   // 4.军事训练-成绩考核
   getAssessRecord: `${BASE_URLA}/jsxlplat/trainAssessIndex/trainAssess/getAssessRecord.do`,
   // 5.军事训练-学习情况展示
-  listByOrgId:`${BASE_URLA}/jsxlpost/mpeLearningManagement/listByOrgId.do`,
+  listByOrgId: `${BASE_URLA}/jsxlpost/mpeLearningManagement/listByOrgId.do`,
   // 6.军事训练-选课情况展示
-  showListIndexChart:`${BASE_URLA}/jsxlpost/mpeCourseManagement/showListIndexChart.do`,
+  showListIndexChart: `${BASE_URLA}/jsxlpost/mpeCourseManagement/showListIndexChart.do`,
   // 7.军事训练-结业情况展示 
-  listByOrgId_mpeGraduationGrades:`${BASE_URLA}/jsxlpost/mpeGraduationGrades/listByOrgId.do`,
+  listByOrgId_mpeGraduationGrades: `${BASE_URLA}/jsxlpost/mpeGraduationGrades/listByOrgId.do`,
   // 1.团长信箱
   bwleadersuggest: `${BASE_URLA}/secplat/basework/bwleadersuggest/save.do`,
-   // 2.政委信箱
-   bwpoliticalsuggest: `${BASE_URLA}/secplat/basework/bwpoliticalsuggest/save.do`,
-   //1.举报信箱
-   bwjdcsuggest: `${BASE_URLA}/secplat/basework/bwjdcsuggest/save.do`,
+  // 2.政委信箱
+  bwpoliticalsuggest: `${BASE_URLA}/secplat/basework/bwpoliticalsuggest/save.do`,
+  //1.举报信箱
+  bwjdcsuggest: `${BASE_URLA}/secplat/basework/bwjdcsuggest/save.do`,
   // 人脸补录
   // updatePersonImg: `POST ${BASE_URLA}/faceplat/facePersonImg/updatePersonImg.do`
 };
