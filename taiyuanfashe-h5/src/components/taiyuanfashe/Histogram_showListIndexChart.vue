@@ -21,7 +21,7 @@ export default {
   props: {
     idName: {
       type: String,
-      default: "HistogramMY",
+      default: "Histogram_showListIndexChart",
     },
     datas: {
       type: Array,

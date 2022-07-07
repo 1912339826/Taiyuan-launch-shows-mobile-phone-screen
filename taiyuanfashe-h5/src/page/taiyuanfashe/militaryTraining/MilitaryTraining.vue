@@ -216,7 +216,7 @@
         <nav class="Istitle">
           <div>
             <img src="../../../../static/images/Index_Box_Icon.png" alt />
-            <div class="text">学习情况展示</div>
+            <div class="text">职教学习情况</div>
           </div>
           <div class="four-tab"></div>
         </nav>
@@ -233,7 +233,7 @@
         <nav class="Istitle">
           <div>
             <img src="../../../../static/images/Index_Box_Icon.png" alt />
-            <div class="text">选课情况展示</div>
+            <div class="text">职教选课情况</div>
           </div>
           <div class="four-tab"></div>
         </nav>
@@ -251,7 +251,7 @@
         <nav class="Istitle">
           <div>
             <img src="../../../../static/images/Index_Box_Icon.png" alt />
-            <div class="text">结业情况展示</div>
+            <div class="text">职教结业情况</div>
           </div>
           <div class="four-tab"></div>
         </nav>
@@ -261,6 +261,10 @@
             :datas="listByOrgId_mpeGraduationGradesList"
             ref="PieListByOrgId"
           ></Pie>
+           <!-- <Pie
+            :roseType="true"
+            ref="PieListByOrgId"
+          ></Pie> -->
         </div>
       </div>
     </div>
@@ -670,7 +674,7 @@ export default {
       objectList = res.data.objectList;
       this.getAssessRecordList = objectList;
     },
-    // 5.学习情况展示-饼图
+    // 5.职教学习情况-饼图
     async listByOrgId(id) {
       this.listByOrgIdList = [];
       let arr = [];
@@ -695,7 +699,7 @@ export default {
         });
       }
     },
-    //6.军事训练-选课情况展示
+    //6.军事训练-职教选课情况
     async showListIndexChart(id) {
       this.showListIndexChartObj = {};
       let Obj = [];
@@ -706,13 +710,14 @@ export default {
       console.log(Obj, "Obj");
       this.showListIndexChartObj = Obj;
     },
-    //7.结业情况展示
+    //7.职教结业情况
     async listByOrgId_mpeGraduationGrades(id) {
       this.listByOrgId_mpeGraduationGradesList = [];
       let arr = [];
       let res = await this.$req(window.api.listByOrgId_mpeGraduationGrades, {
         orgId: id,
       });
+      console.log(res,'职教结业情况+++++++++++++++++')
       arr = res.data.data;
       // 此处判断后台数据是否异常
       if (arr.length != 0) {

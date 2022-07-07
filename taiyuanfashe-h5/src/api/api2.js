@@ -87,12 +87,12 @@ export default {
   showPostList: `${BASE_URLA}/jsxlplat/defaultpage/datastatics/showPostList.do`,
   // 4.军事训练-成绩考核
   getAssessRecord: `${BASE_URLA}/jsxlplat/trainAssessIndex/trainAssess/getAssessRecord.do`,
-  // 5.军事训练-学习情况展示
+  // 5.军事训练-职教学习情况
   listByOrgId: `${BASE_URLA}/jsxlpost/mpeLearningManagement/listByOrgId.do`,
-  // 6.军事训练-选课情况展示
+  // 6.军事训练-职教选课情况
   showListIndexChart: `${BASE_URLA}/jsxlpost/mpeCourseManagement/showListIndexChart.do`,
-  // 7.军事训练-结业情况展示 
-  listByOrgId_mpeGraduationGrades: `${BASE_URLA}/jsxlpost/mpeGraduationGrades/listByOrgId.do`,
+  // 7.军事训练-职教结业情况 /jsxlpost/mpeGraduationGrades/listByOrgId.do
+  listByOrgId_mpeGraduationGrades: `${BASE_URLA}/jsxlpost/mpeGraduationGrades/listSXByOrgId.do`,
   // 1.团长信箱
   bwleadersuggest: `${BASE_URLA}/secplat/basework/bwleadersuggest/save.do`,
   // 2.政委信箱

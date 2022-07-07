@@ -235,7 +235,7 @@
               <div class="text">年度外诊态势</div>
             </div>
 
-            <div class="Isborder">
+            <!-- <div class="Isborder">
               <div class="date">
                 <div class="son form">
                   <img
@@ -290,6 +290,31 @@
               >
                 查询
               </a-button>
+            </div> -->
+            <div class="Isborder">
+              <div class="date">
+                <div class="son to">
+                  <img
+                    src="../../../../static/images/circle_left_03.png"
+                    alt
+                    @click="listDiagnosisManageToMinus"
+                  />
+                  <div>{{ listDiagnosisManageTo.year }}年</div>
+                  <img
+                    src="../../../../static/images/circle_right_03.png"
+                    alt
+                    @click="listDiagnosisManageToAdd"
+                  />
+                </div>
+              </div>
+
+              <a-button
+                type="primary"
+                size="small"
+                @click="listDiagnosisManage"
+              >
+                查询
+              </a-button>
             </div>
           </nav>
 
@@ -311,7 +336,7 @@
               <div class="text">年度疗养态势</div>
             </div>
 
-            <div class="Isborder">
+            <!-- <div class="Isborder">
               <div class="date">
                 <div class="son form">
                   <img
@@ -351,6 +376,31 @@
                     {{ listLsrecuperateManageTo.year }}年
                     {{ listLsrecuperateManageTo.month }}月
                   </div>
+                  <img
+                    src="../../../../static/images/circle_right_03.png"
+                    alt
+                    @click="listLsrecuperateManageToAdd"
+                  />
+                </div>
+              </div>
+
+              <a-button
+                type="primary"
+                size="small"
+                @click="listLsrecuperateManage"
+              >
+                查询
+              </a-button>
+            </div> -->
+            <div class="Isborder">
+              <div class="date">
+                <div class="son to">
+                  <img
+                    src="../../../../static/images/circle_left_03.png"
+                    alt
+                    @click="listLsrecuperateManageToMinus"
+                  />
+                  <div>{{ listLsrecuperateManageTo.year }}年</div>
                   <img
                     src="../../../../static/images/circle_right_03.png"
                     alt
@@ -554,43 +604,45 @@ export default {
       }
     },
 
-    //8.年度外诊态势 To上个月
+    //8.年度外诊态势 To上个
     listDiagnosisManageToMinus() {
-      if (this.listDiagnosisManageTo.month == "01") {
-        this.listDiagnosisManageTo.month = "12";
-        this.listDiagnosisManageTo.year = `${
-          Number(this.listDiagnosisManageTo.year) - 1
-        }`;
-      } else {
-        if (Number(this.listDiagnosisManageTo.month) - 1 < 10) {
-          this.listDiagnosisManageTo.month = `0${
-            Number(this.listDiagnosisManageTo.month) - 1
-          }`;
-        } else {
-          this.listDiagnosisManageTo.month = `${
-            Number(this.listDiagnosisManageTo.month) - 1
-          }`;
-        }
-      }
+      // if (this.listDiagnosisManageTo.month == "01") {
+      //   this.listDiagnosisManageTo.month = "12";
+      //   this.listDiagnosisManageTo.year = `${
+      //     Number(this.listDiagnosisManageTo.year) - 1
+      //   }`;
+      // } else {
+      //   if (Number(this.listDiagnosisManageTo.month) - 1 < 10) {
+      //     this.listDiagnosisManageTo.month = `0${
+      //       Number(this.listDiagnosisManageTo.month) - 1
+      //     }`;
+      //   } else {
+      //     this.listDiagnosisManageTo.month = `${
+      //       Number(this.listDiagnosisManageTo.month) - 1
+      //     }`;
+      //   }
+      // }
+      this.listDiagnosisManageTo.year--;
     },
-    //8.年度外诊态势 To下个月
+    //8.年度外诊态势 To下个
     listDiagnosisManageToAdd() {
-      if (this.listDiagnosisManageTo.month == "12") {
-        this.listDiagnosisManageTo.month = "01";
-        this.listDiagnosisManageTo.year = `${
-          Number(this.listDiagnosisManageTo.year) + 1
-        }`;
-      } else {
-        if (Number(this.listDiagnosisManageTo.month) + 1 < 10) {
-          this.listDiagnosisManageTo.month = `0${
-            Number(this.listDiagnosisManageTo.month) + 1
-          }`;
-        } else {
-          this.listDiagnosisManageTo.month = `${
-            Number(this.listDiagnosisManageTo.month) + 1
-          }`;
-        }
-      }
+      // if (this.listDiagnosisManageTo.month == "12") {
+      //   this.listDiagnosisManageTo.month = "01";
+      //   this.listDiagnosisManageTo.year = `${
+      //     Number(this.listDiagnosisManageTo.year) + 1
+      //   }`;
+      // } else {
+      //   if (Number(this.listDiagnosisManageTo.month) + 1 < 10) {
+      //     this.listDiagnosisManageTo.month = `0${
+      //       Number(this.listDiagnosisManageTo.month) + 1
+      //     }`;
+      //   } else {
+      //     this.listDiagnosisManageTo.month = `${
+      //       Number(this.listDiagnosisManageTo.month) + 1
+      //     }`;
+      //   }
+      // }
+      this.listDiagnosisManageTo.year++;
     },
 
     //9.疗养态势 Form上个月
@@ -634,41 +686,43 @@ export default {
 
     //9.疗养态势 To上个月
     listLsrecuperateManageToMinus() {
-      if (this.listLsrecuperateManageTo.month == "01") {
-        this.listLsrecuperateManageTo.month = "12";
-        this.listLsrecuperateManageTo.year = `${
-          Number(this.listLsrecuperateManageTo.year) - 1
-        }`;
-      } else {
-        if (Number(this.listLsrecuperateManageTo.month) - 1 < 10) {
-          this.listLsrecuperateManageTo.month = `0${
-            Number(this.listLsrecuperateManageTo.month) - 1
-          }`;
-        } else {
-          this.listLsrecuperateManageTo.month = `${
-            Number(this.listLsrecuperateManageTo.month) - 1
-          }`;
-        }
-      }
+      // if (this.listLsrecuperateManageTo.month == "01") {
+      //   this.listLsrecuperateManageTo.month = "12";
+      //   this.listLsrecuperateManageTo.year = `${
+      //     Number(this.listLsrecuperateManageTo.year) - 1
+      //   }`;
+      // } else {
+      //   if (Number(this.listLsrecuperateManageTo.month) - 1 < 10) {
+      //     this.listLsrecuperateManageTo.month = `0${
+      //       Number(this.listLsrecuperateManageTo.month) - 1
+      //     }`;
+      //   } else {
+      //     this.listLsrecuperateManageTo.month = `${
+      //       Number(this.listLsrecuperateManageTo.month) - 1
+      //     }`;
+      //   }
+      // }
+      this.listLsrecuperateManageTo.year--;
     },
-    //9.疗养态势 To下个月
+    //9.疗养态势 To下个
     listLsrecuperateManageToAdd() {
-      if (this.listLsrecuperateManageTo.month == "12") {
-        this.listLsrecuperateManageTo.month = "01";
-        this.listLsrecuperateManageTo.year = `${
-          Number(this.listLsrecuperateManageTo.year) + 1
-        }`;
-      } else {
-        if (Number(this.listLsrecuperateManageTo.month) + 1 < 10) {
-          this.listLsrecuperateManageTo.month = `0${
-            Number(this.listLsrecuperateManageTo.month) + 1
-          }`;
-        } else {
-          this.listLsrecuperateManageTo.month = `${
-            Number(this.listLsrecuperateManageTo.month) + 1
-          }`;
-        }
-      }
+      // if (this.listLsrecuperateManageTo.month == "12") {
+      //   this.listLsrecuperateManageTo.month = "01";
+      //   this.listLsrecuperateManageTo.year = `${
+      //     Number(this.listLsrecuperateManageTo.year) + 1
+      //   }`;
+      // } else {
+      //   if (Number(this.listLsrecuperateManageTo.month) + 1 < 10) {
+      //     this.listLsrecuperateManageTo.month = `0${
+      //       Number(this.listLsrecuperateManageTo.month) + 1
+      //     }`;
+      //   } else {
+      //     this.listLsrecuperateManageTo.month = `${
+      //       Number(this.listLsrecuperateManageTo.month) + 1
+      //     }`;
+      //   }
+      // }
+      this.listLsrecuperateManageTo.year++;
     },
 
     //  1.日常管理-人员在位率柱状图(最上面,右边的图)
@@ -761,22 +815,60 @@ export default {
       this.listDiagnosisManageObj = { data: [], name: [] };
       let res = await this.$req(window.api.listDiagnosisManage, {
         levelCode: localStorage.getItem("orgLevelCode"),
-        beginTime: `${this.listDiagnosisManageForm.year}-${this.listDiagnosisManageForm.month}-01`,
-        endTime: this.endTime_fun(
-          `${this.listDiagnosisManageTo.year}-${this.listDiagnosisManageTo.month}-01`
-        ),
+        // beginTime: `${this.listDiagnosisManageForm.year}-${this.listDiagnosisManageForm.month}-01`,
+        // endTime: this.endTime_fun(
+        //   `${this.listDiagnosisManageTo.year}-${this.listDiagnosisManageTo.month}-01`
+        // ),
+        beginTime: `${this.listDiagnosisManageTo.year}-01-01`,
+        endTime: `${this.listDiagnosisManageTo.year}-12-31`,
       });
       console.log(res); //count name
       if (res.data.objectList.length != 0) {
         for (let index = 0; index < res.data.objectList.length; index++) {
           const element = res.data.objectList[index];
+          // if (res.data.objectList.length < 8) {
           this.listDiagnosisManageObj.data.push({
             name: element.name,
             animation: false,
             data: [element.count],
             type: "bar",
-            barWidth: "20%",
+            // barWidth: "10%",
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true, //开启显示
+                  position: "top", //在上方显示
+                  textStyle: {
+                    //数值样式
+                    color: "#ffffff",
+                    fontSize: 20,
+                  },
+                },
+              },
+            },
           });
+          // } else {
+          // this.listDiagnosisManageObj.data.push({
+          //   name: element.name,
+          //   animation: false,
+          //   data: [element.count],
+          //   type: "bar",
+          //   itemStyle: {
+          //     normal: {
+          //       label: {
+          //         show: true, //开启显示
+          //         position: "top", //在上方显示
+          //         textStyle: {
+          //           //数值样式
+          //           color: "#ffffff",
+          //           fontSize: 20,
+          //         },
+          //       },
+          //     },
+          //   },
+          // });
+          // }
+
           this.listDiagnosisManageObj.name.push(element.name);
         }
       }
@@ -786,21 +878,59 @@ export default {
       this.listLsrecuperateManageObj = { data: [], name: [] };
       let res = await this.$req(window.api.listLsrecuperateManage, {
         levelCode: localStorage.getItem("orgLevelCode"),
-        beginTime: `${this.listLsrecuperateManageForm.year}-${this.listLsrecuperateManageForm.month}-01`,
-        endTime: this.endTime_fun(
-          `${this.listLsrecuperateManageTo.year}-${this.listLsrecuperateManageTo.month}-01`
-        ),
+        // beginTime: `${this.listLsrecuperateManageForm.year}-${this.listLsrecuperateManageForm.month}-01`,
+        // endTime: this.endTime_fun(
+        //   `${this.listLsrecuperateManageTo.year}-${this.listLsrecuperateManageTo.month}-01`
+        // ),
+        beginTime: `${this.listLsrecuperateManageTo.year}-01-01`,
+        endTime: `${this.listLsrecuperateManageTo.year}-12-31`,
       }); //count name
       if (res.data.objectList.length != 0) {
         for (let index = 0; index < res.data.objectList.length; index++) {
           const element = res.data.objectList[index];
+          // if (res.data.objectList.length < 8) {
           this.listLsrecuperateManageObj.data.push({
             name: element.name,
             animation: false,
             data: [element.count],
             type: "bar",
-            barWidth: "20%",
+            // barWidth: "10%",
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true, //开启显示
+                  position: "top", //在上方显示
+                  textStyle: {
+                    //数值样式
+                    color: "#ffffff",
+                    fontSize: 20,
+                  },
+                },
+              },
+            },
           });
+          // } else {
+          // this.listLsrecuperateManageObj.data.push({
+          //   name: element.name,
+          //   animation: false,
+          //   data: [element.count],
+          //   type: "bar",
+          //   itemStyle: {
+          //     normal: {
+          //       label: {
+          //         show: true, //开启显示
+          //         position: "top", //在上方显示
+          //         textStyle: {
+          //           //数值样式
+          //           color: "#ffffff",
+          //           fontSize: 20,
+          //         },
+          //       },
+          //     },
+          //   },
+          // });
+          // }
+
           this.listLsrecuperateManageObj.name.push(element.name);
         }
       }

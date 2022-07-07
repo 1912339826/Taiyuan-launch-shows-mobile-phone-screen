@@ -16,12 +16,13 @@ export default {
   data() {
     return {
       imgs: "",
+      fontSize: 1,
     };
   },
   props: {
     idName: {
       type: String,
-      default: "HistogramMY",
+      default: "Histogram_listLsrecuperateManage",
     },
     datas: {
       type: Array,
@@ -80,6 +81,8 @@ export default {
   },
   methods: {
     visitor() {
+      this.fontSize =
+        Number(document.documentElement.style.fontSize.split("px")[0]) * 0.1;
       console.log(this.datas);
       let myChart = this.$echarts.init(
         document.getElementById(this.idName),
