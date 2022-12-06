@@ -22,7 +22,7 @@
     "normalize.css": "^8.0.1",
     "pdfjs-dist": "^2.3.200",
     "pdfobject": "^2.1.1",
-    "qs": "^6.9.3",
+    "qs": "^6.9.7",
     "v-clipboard": "^2.2.2",
     "v-distpicker": "^1.0.8",
     "vee-validate": "^2.0.0-beta.17",
